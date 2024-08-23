@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide - FB Auto Share</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #1c1c1c;
+            border: 2px solid #00aaff;
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            text-align: left;
+            margin: 20px 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .footer a {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff8000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Guide for FB Auto Share</h2>
+        <div class="content">
+            <h3>How to Use FB Auto Share</h3>
+            <ol>
+                <li>
+                    <strong>Get Your Facebook Token:</strong> 
+                    <p>Navigate to <a href="tokengetter.html">Token Getter</a> to obtain your Facebook Access Token by entering your email and password.</p>
+                </li>
+                <li>
+                    <strong>Access Token and Post URL:</strong>
+                    <p>On the <a href="index.html">main page</a>, enter your Facebook Access Token, the URL of the post you want to share, and the number of times you want to share it.</p>
+                </li>
+                <li>
+                    <strong>Submit the Form:</strong>
+                    <p>Click the "Submit" button to start the sharing process. The application will handle the sharing requests as per the specified count.</p>
+                </li>
+                <li>
+                    <strong>Monitor and Manage:</strong>
+                    <p>Ensure that your Facebook account remains active and does not get locked. The application will continue to attempt shares until the process is completed or the account becomes inactive.</p>
+                </li>
+            </ol>
+            <h3>Troubleshooting</h3>
+            <ul>
+                <li>
+                    <strong>Token Issues:</strong> Ensure that you are using a valid and active token obtained from the Token Getter page.
+                </li>
+                <li>
+                    <strong>Share Limits:</strong> Verify that the URL you are trying to share is public and accessible.
+                </li>
+                <li>
+                    <strong>Account Lock:</strong> If your Facebook account gets locked, you may need to resolve it manually before resuming the sharing process.
+                </li>
+            </ul>
+        </div>
+        <div class="footer">
+            <p><a href="index.html">Back to Main Page</a></p>
+            <p>For more assistance, contact <a href="https://www.facebook.com/profile.php?id=100091592152325" target="_blank">JrDev06 - Jr Busaco</a></p>
+        </div>
+    </div>
+</body>
+</html>

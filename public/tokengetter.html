@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Getter - FB Auto Share</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #1c1c1c;
+            border: 2px solid #00aaff;
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0px 5px 15px rgba(0, 170, 255, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+            background-color: #0099cc;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-container p {
+            margin: 0;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .result-container button {
+            margin-top: 10px;
+            background-color: #00aaff;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result-container button:hover {
+            background-color: #0099cc;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .footer a {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff8000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Token Getter</h2>
+        <form id="tokenForm">
+            <div class="form-group">
+                <label for="email">Facebook Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email..." required>
+            </div>
+            <div class="form-group">
+                <label for="password">Facebook Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password..." required>
+            </div>
+            <button type="submit" class="btn-submit">Get Token</button>
+        </form>
+        <div id="resultContainer" class="result-container" style="display: none;">
+            <p><strong>Your Facebook Token:</strong></p>
+            <p id="resultToken"></p>
+            <button id="copyButton">Copy Token</button>
+        </div>
+        <div class="footer">
+            <p><a href="index.html">Back to Main Page</a></p>
+            <p>For more assistance, contact <a href="https://www.facebook.com/profile.php?id=100091592152325" target="_blank">JrDev06 - Jr Busaco</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('tokenForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/get-token', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (data.token) {
+                    document.getElementById('resultToken').innerText = data.token;
+                    document.getElementById('resultContainer').style.display = 'block';
+                } else {
+                    alert('Failed to get token. Check your email and password.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        document.getElementById('copyButton').addEventListener('click', function () {
+            const tokenText = document.getElementById('resultToken').innerText;
+            navigator.clipboard.writeText(tokenText).then(() => {
+                alert('Token copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>

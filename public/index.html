@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FB Auto Share</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #111;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #1c1c1c;
+            border: 2px solid #00aaff;
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .form-control {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #00aaff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s ease;
+            box-shadow: 0px 5px 15px rgba(0, 170, 255, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: scale(1.05);
+            background-color: #0099cc;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            background-color: #333;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .result-container p {
+            margin: 0;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .result-container button {
+            margin-top: 10px;
+            background-color: #00aaff;
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .result-container button:hover {
+            background-color: #0099cc;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .footer a {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #ff8000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>FB AUTO SHARE</h2>
+        <form id="postForm">
+            <div class="form-group">
+                <label for="fbtoken">Facebook Access Token:</label>
+                <input type="text" class="form-control" id="fbtoken" placeholder="Enter your access token..." required>
+            </div>
+            <div class="form-group">
+                <label for="url">Post URL [Public]:</label>
+                <input type="text" class="form-control" id="url" placeholder="Enter post URL (Public post)" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">Share Limit Count:</label>
+                <input type="number" class="form-control" id="amount" placeholder="Enter number of shares..." required>
+            </div>
+            <button type="submit" class="btn-submit">Submit</button>
+        </form>
+        <div id="formError" style="color: #ff0000; margin-top: 10px;"></div>
+        <div class="footer">
+            <p>Don't know what to do? <a href="guide.html">Click here for the guide!</a></p>
+            <p><a href="https://www.facebook.com/profile.php?id=100091592152325" target="_blank">JrDev06 - Jr Busaco</a></p>
+            <p>Need an access token? <a href="tokengetter.html">Get it here!</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('postForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const fbtoken = document.getElementById('fbtoken').value.trim();
+            const url = document.getElementById('url').value.trim();
+            const amount = document.getElementById('amount').value.trim();
+
+            if (!fbtoken || !url || !amount) {
+                document.getElementById('formError').innerText = 'Token, URL, and amount are required.';
+                return;
+            }
+
+            try {
+                const response = await fetch('/spam-share', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ token: fbtoken, url, amount }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    document.getElementById('formError').innerText = '';
+                    document.querySelector('.container').innerHTML += `
+                        <div class="result-container">
+                            <p>Sharing initiated. Your request is being processed.</p>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('formError').innerText = result.error || 'An error occurred.';
+                }
+            } catch (error) {
+                document.getElementById('formError').innerText = 'An error occurred.';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
